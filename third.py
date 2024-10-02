@@ -1,14 +1,13 @@
 import sys
-from pathlib import Path,PurePath
+from pathlib import Path
 from colorama import Fore,Style
-import os
 
 def print_tree(path,tab=0):
     for el in path.iterdir():
         if el.is_file():
-            print(Fore.RED+' '*tab+'📜 '+os.path.basename(el))
+            print(Fore.RED+' '*tab+'📜 '+el.parts[-1])
         else:
-            print(Fore.GREEN+' '*tab+'📂 '+el.parts[len(el.parts)-1])
+            print(Fore.GREEN+' '*tab+'📂 '+el.parts[-1])
             print_tree(el,tab+4)
 
 
@@ -20,7 +19,7 @@ def main():
         return 
     path=Path(args[1])
 
-    if path.is_dir()!=True and path.exists()!=True:
+    if not path.is_dir() and not path.exists():
         print('path in not a directory or not exists')
         return
     
